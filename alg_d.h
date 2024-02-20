@@ -170,8 +170,6 @@ void AlgorithmD::migrate(const int tid, table * t, int myChunk) {
         else {
             while(!t->old[i].compare_exchange_strong(key, key | MARKED_MASK)) {
                 key = t->old[i];
-                if(key == TOMBSTONE)
-                    break;
             }
             if((key != TOMBSTONE) && (key != EMPTY)) {
                 insertForMigration(tid, key);
